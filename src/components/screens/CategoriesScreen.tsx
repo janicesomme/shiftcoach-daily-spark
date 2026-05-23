@@ -41,6 +41,7 @@ export function CategoriesScreen() {
                 key={s.id}
                 categoryName={category.name}
                 title={s.title}
+                quick={s.quick}
                 meaning={s.meaning}
                 status={status}
                 onUsed={() => markUsed(s.id)}
