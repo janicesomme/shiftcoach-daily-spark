@@ -3,7 +3,15 @@ import { useEffect, useState, useCallback } from "react";
 export type DayRecord = {
   completed: string[];
   notRelevant: string[];
+  focusCategories?: string[];
 };
+
+export function setFocusCategories(ids: string[], dateKey = todayKey()) {
+  const s = read();
+  const day = ensureDay(s, dateKey);
+  day.focusCategories = ids.slice(0, 3);
+  write(s);
+}
 
 export type Store = {
   days: Record<string, DayRecord>; // key: YYYY-MM-DD
