@@ -1,20 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { ALL_SKILLS } from "@/lib/skills-data";
 import { useStore } from "@/lib/storage";
 
-export const Route = createFileRoute("/history")({
-  head: () => ({
-    meta: [
-      { title: "History — Shift Coach" },
-      { name: "description", content: "Review your practice on past days." },
-    ],
-  }),
-  component: HistoryPage,
-});
-
-function HistoryPage() {
+export function HistoryScreen() {
   const { store } = useStore();
 
   const days = useMemo(
@@ -41,7 +30,12 @@ function HistoryPage() {
       ) : (
         <ul className="space-y-2">
           {days.map(([key, d]) => (
-            <HistoryRow key={key} dateKey={key} completed={d.completed} notRelevant={d.notRelevant} />
+            <HistoryRow
+              key={key}
+              dateKey={key}
+              completed={d.completed}
+              notRelevant={d.notRelevant}
+            />
           ))}
         </ul>
       )}
@@ -101,7 +95,8 @@ function HistoryRow({
                   if (!s) return null;
                   return (
                     <li key={id} className="text-sm text-foreground">
-                      <span className="text-muted-foreground">{s.categoryName}:</span> {s.title}
+                      <span className="text-muted-foreground">{s.categoryName}:</span>{" "}
+                      {s.title}
                     </li>
                   );
                 })}

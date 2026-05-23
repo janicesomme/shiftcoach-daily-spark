@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { Flame, Trophy } from "lucide-react";
 import { CATEGORIES } from "@/lib/skills-data";
@@ -12,17 +11,7 @@ import {
   useStore,
 } from "@/lib/storage";
 
-export const Route = createFileRoute("/progress")({
-  head: () => ({
-    meta: [
-      { title: "Progress — Shift Coach" },
-      { name: "description", content: "See your weekly progress and streaks." },
-    ],
-  }),
-  component: ProgressPage,
-});
-
-function ProgressPage() {
+export function ProgressScreen() {
   const { store } = useStore();
 
   const stats = useMemo(() => {
@@ -35,7 +24,6 @@ function ProgressPage() {
     const streak = computeStreak(store, now);
     const best = computeBestStreak(store);
 
-    // bar chart days mon-sun
     const days: { label: string; count: number; isToday: boolean }[] = [];
     const labels = ["M", "T", "W", "T", "F", "S", "S"];
     for (let i = 0; i < 7; i++) {
@@ -49,7 +37,6 @@ function ProgressPage() {
       });
     }
 
-    // category counts this week
     const cats = CATEGORIES.map((c) => {
       let n = 0;
       const d = new Date(weekStart);
@@ -58,7 +45,7 @@ function ProgressPage() {
         n += c.skills.filter((s) => completed.includes(s.id)).length;
         d.setDate(d.getDate() + 1);
       }
-      return { name: c.name, short: c.short, count: n, total: c.skills.length };
+      return { name: c.name, count: n, total: c.skills.length };
     });
 
     return { todayCount, weekCount, monthCount, streak, best, days, cats };
@@ -104,11 +91,18 @@ function ProgressPage() {
                   className={`w-full rounded-t-md transition-all ${
                     d.isToday ? "bg-primary" : "bg-primary/30"
                   }`}
-                  style={{ height: `${(d.count / maxBar) * 100}%`, minHeight: d.count > 0 ? 4 : 0 }}
+                  style={{
+                    height: `${(d.count / maxBar) * 100}%`,
+                    minHeight: d.count > 0 ? 4 : 0,
+                  }}
                 />
               </div>
               <div className="text-[10px] font-medium text-muted-foreground">{d.count}</div>
-              <div className={`text-[11px] ${d.isToday ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
+              <div
+                className={`text-[11px] ${
+                  d.isToday ? "font-semibold text-foreground" : "text-muted-foreground"
+                }`}
+              >
                 {d.label}
               </div>
             </div>

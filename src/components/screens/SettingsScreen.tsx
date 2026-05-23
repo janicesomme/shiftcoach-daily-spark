@@ -1,19 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AlertTriangle, RotateCcw, Trash2 } from "lucide-react";
 import { resetAll, resetToday } from "@/lib/storage";
 
-export const Route = createFileRoute("/settings")({
-  head: () => ({
-    meta: [
-      { title: "Settings — Shift Coach" },
-      { name: "description", content: "Manage your local data." },
-    ],
-  }),
-  component: SettingsPage,
-});
-
-function SettingsPage() {
+export function SettingsScreen() {
   const [confirmAll, setConfirmAll] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
@@ -41,7 +30,9 @@ function SettingsPage() {
             <RotateCcw className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-sm font-semibold text-foreground">Reset today's checklist</div>
+            <div className="text-sm font-semibold text-foreground">
+              Reset today's checklist
+            </div>
             <div className="text-xs text-muted-foreground">Clears today only.</div>
           </div>
         </button>
@@ -82,7 +73,9 @@ function SettingsPage() {
               <Trash2 className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-foreground">Reset all local data</div>
+              <div className="text-sm font-semibold text-foreground">
+                Reset all local data
+              </div>
               <div className="text-xs text-muted-foreground">
                 Removes history and streaks.
               </div>
