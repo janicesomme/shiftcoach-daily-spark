@@ -86,6 +86,7 @@ function RootComponent() {
       <AppShell>
         <Outlet />
       </AppShell>
+      <Toaster position="bottom-center" />
     </QueryClientProvider>
   );
 }
