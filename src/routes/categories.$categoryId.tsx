@@ -44,7 +44,7 @@ function CategoryDetail() {
       </header>
 
       <ul className="space-y-3">
-        {category.skills.map((s) => {
+        {category.skills.map((s: { id: string; title: string; meaning: string }) => {
           const done = day.completed.includes(s.id);
           const skipped = day.notRelevant.includes(s.id);
           return (
